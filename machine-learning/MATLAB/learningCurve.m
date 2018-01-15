@@ -1,5 +1,5 @@
 function [error_train, error_val] = ...
-    learningCurve(X, y, Xval, yval, lambda)
+    learningCurve(X, y, Xval, yval, lambda, iter)
 %LEARNINGCURVE Generates the train and cross validation set errors needed 
 %to plot a learning curve
 %   [error_train, error_val] = ...
@@ -57,7 +57,7 @@ error_val   = zeros(m, 1); % 交叉验证集误差
 for i = 1:m
 	X_test = X(1:i, :);
 	y_test = y(1:i);
-	[theta] = trainLinearReg(X_test, y_test, lambda); % 样本数为i时，通过高级梯度下降计算出theta
+	[theta] = trainLinearReg(X_test, y_test, lambda, iter); % 样本数为i时，通过高级梯度下降计算出theta
 	error_train(i) = linearRegCostFunction(X_test, y_test, theta, 0); % lambda传入0计算训练误差J_train
 	error_val(i) = linearRegCostFunction(Xval, yval, theta, 0); % lambda传入0计算交叉验证误差J_cv
 end

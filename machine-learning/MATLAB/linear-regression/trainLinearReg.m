@@ -1,5 +1,5 @@
 % 训练线性回归
-function [theta] = trainLinearReg(X, y, lambda)
+function [theta, J] = trainLinearReg(X, y, lambda, iter)
 
 % Initialize Theta
 initial_theta = zeros(size(X, 2), 1); 
@@ -8,9 +8,9 @@ initial_theta = zeros(size(X, 2), 1);
 costFunction = @(t) linearRegCostFunction(X, y, t, lambda);
 
 % Now, costFunction is a function that takes in only one argument
-options = optimset('MaxIter', 200, 'GradObj', 'on');
+options = optimset('MaxIter', iter, 'GradObj', 'on');
 
 % Minimize using fmincg
-theta = fmincg(costFunction, initial_theta, options);
+[theta, J] = fmincg(costFunction, initial_theta, options);
 
 end

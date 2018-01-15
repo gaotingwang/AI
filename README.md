@@ -3,7 +3,7 @@
 
 1. 数据清洗后，加载数据
 
-   对数据样本进行拆分，按照3:1:1的比例拆分出：训练集(Training Set)**、**交叉验证集（cross validation set）**、**测试集(Test Set)
+   对数据样本进行拆分，按照3:1:1的比例拆分出：**训练集(Training Set)**、**交叉验证集（cross validation set）**、**测试集(Test Set)**
 
 2. **若数据跨度大，需要对数据统一做均值归一化处理**
 

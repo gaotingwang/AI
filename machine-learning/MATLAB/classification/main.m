@@ -37,7 +37,7 @@ init_theta = zeros(num_labels, feature_num + 1); % 初始化theta
 
 X_train = [ones(train_size, 1) X_train];
 lambda = 4;
-options = optimset('GradObj', 'on', 'MaxIter', 200);
+options = optimset('GradObj', 'on', 'MaxIter', 40);
 
 for i = 1:num_labels
 	thetai = init_theta(i, :);
@@ -55,14 +55,56 @@ fprintf('\nValidation Set Accuracy: %f\n', mean(double(pred == y_val)) * 100);
 pred = predictOneVsAll(init_theta, X_test);
 fprintf('\nTesting Set Accuracy: %f\n', mean(double(pred == y_test)) * 100);
 
-
-%% 将多分类转换为二分类，如何获取代价函数J的值 ???
-
-%% =========== Part 2: SVM区域 =============
+%% =============== Part 3: SVM区域 ==================
 
 % 使用SVM
 fprintf('Prepare to use SVM. Press enter to continue.\n');
 pause;
+load('mydata3.mat');
+
+% 线性核函数
+% C = 1; 
+% model = svmTrain(X, y, C, @linearKernel, 1e-3, 20);
+
+% 遍历list寻找使误差最小的C和sigma
+% list = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+% maxError = 1; % 假设模型完全不匹配，误差率为1
+% for i = 1 : length(list)
+% 	for j = 1 : length(list)
+% 		C_train = list(i);
+% 		sigma_train = list(j);
+% 		model= svmTrain(X, y, C_train, @(x1, x2) gaussianKernel(x1, x2, sigma_train));
+% 		predictions = svmPredict(model, Xval);
+% 		errors = mean(double(predictions ~= yval));
+% 		% 取误差最小的C和sigma
+% 		if errors <= maxError
+% 			C = C_train;
+% 			sigma = sigma_train;
+% 			maxError = errors;
+% 		end
+% 	end
+% end
+
+% SVM Parameters
+C = 1; sigma = 0.1;
+model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
+model
+
+fprintf('Program paused. Press enter to continue.\n');
+pause;
+
+% 准确率
+% svmPredict该函数主要思路是先计算出p(theta' * X)，根据p大于0或小于0决定在决策边界的哪一边
+% svm的假设函数：p >= 0点的预测值为1，< 0 预测值为0
+pred = svmPredict(model, X);
+fprintf('Test Accuracy: %f\n', mean(double(pred == y)) * 100);
+
+
+
+%% 将多分类转换为二分类，如何获取代价函数J的值? 怎么绘制学习曲线??
+
+
+
 
 
 %% ================== end ========================

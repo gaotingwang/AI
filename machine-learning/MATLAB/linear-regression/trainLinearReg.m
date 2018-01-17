@@ -1,5 +1,5 @@
 % 训练线性回归
-function [theta, J] = trainLinearReg(X, y, lambda, iter)
+function [theta, J] = trainLinearReg(X, y, initial_theta, lambda, iter)
 
 % Initialize Theta
 initial_theta = zeros(size(X, 2), 1); 

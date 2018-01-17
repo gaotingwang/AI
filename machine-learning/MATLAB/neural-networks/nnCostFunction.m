@@ -57,12 +57,11 @@ for i = 1:m
 	a_2 = [1 sigmoid(z_2)]; % 计算前添加偏置单元
 	z_3 = a_2 * Theta2';
 	a_3 = sigmoid(z_3);
-	% 计算每一层的误差
-	for k = 1:num_labels
-		y_i = zeros(num_labels, 1);
-		y_i(y(i)) = 1; % 输出值y变成对应k值为1的形式 [0,0,1,0,0]
-		delta_3 = a_3' - y_i;
-	end
+	% 计算输出层的误差
+	y_i = zeros(num_labels, 1);
+	y_i(y(i)) = 1; % 输出值y变成对应k值为1的形式 [0,0,1,0,0]
+	delta_3 = a_3' - y_i;
+
 	% 计算隐藏层的delta不应该包括偏置单元
 	delta_2 = (Theta2(: , 2:end))' * delta_3 .* sigmoidGradient(z_2');
 	% delta_2 = delta_2(2:end); % 舍弃偏置单元对应的delta

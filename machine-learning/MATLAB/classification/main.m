@@ -9,6 +9,11 @@ fprintf('Loading Data ...\n')
 % 加载数据，必要时按照3:1:1的比例拆分出：训练集、交叉验证集、测试集
 load ('mydata2.mat');
 
+% % 加载excel中的数据
+% pkg install D:\Octave\Octave-3.8.2\src\io-2.2.6.tar.gz; % 只需运行一次，不需要每次运行
+% pkg load io;
+% [Train, txt]= xlsread('a4.xlsx', 'A1:J19202');
+
 Train = [X, y];
 rand_indices = randperm(size(Train, 1)); %返回一个从1-m的包含m个数的随机排列,每个数字只出现一次
 
@@ -98,6 +103,24 @@ pause;
 % svm的假设函数：p >= 0点的预测值为1，< 0 预测值为0
 pred = svmPredict(model, X);
 fprintf('Test Accuracy: %f\n', mean(double(pred == y)) * 100);
+
+%% =============== Part 4: 使用LIBSVM区域 ==================
+
+% 数据需要为double型的
+% double(Train);
+
+addpath('./libsvm');
+
+% libsvm使用
+C = 30;
+sigma = 1;
+opt = sprintf('%s %f %s %f %s', '-c', C, '-g', sigma, '-h 0');
+% 模型训练
+model = libsvmtrain(y_train, X_train, opt);
+% 模型准确率预测
+[predict_label, accuracy, dec_values] = libsvmpredict(y_train, X_train, model);
+[predict_label, accuracy, dec_values] = libsvmpredict(y_val, X_val, model);
+[predict_label, accuracy, dec_values] = libsvmpredict(y_test, X_test, model);
 
 
 

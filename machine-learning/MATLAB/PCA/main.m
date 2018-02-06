@@ -45,8 +45,7 @@ for i = 1:size(X_norm, 1)
 end
 hold off
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
+fprintf('Program finished.\n');
 
 
 %% ================== end ========================

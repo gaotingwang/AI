@@ -28,8 +28,7 @@ max_iters = 10;
 [centroids, idx] = runkMeans(X, initial_centroids, max_iters, true);
 fprintf('\nK-Means Done.\n\n');
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
+fprintf('Program finished. \n');
 
 %% ================== end ========================
 

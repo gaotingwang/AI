@@ -13,14 +13,6 @@ pause;
 
 %% =========== Part 2: 协同过滤区域 =============
 
-
-%  Add our own ratings to the data matrix
-Y = [my_ratings Y];
-R = [(my_ratings ~= 0) R];
-
-%  Normalize Ratings
-[Ynorm, Ymean] = normalizeRatings(Y, R);
-
 %  Useful Values
 num_users = size(Y, 2);
 num_movies = size(Y, 1);
@@ -37,7 +29,7 @@ options = optimset('GradObj', 'on', 'MaxIter', 100);
 
 % Set Regularization
 lambda = 10;
-theta = fmincg (@(t)(cofiCostFunc(t, Ynorm, R, num_users, num_movies, ...
+theta = fmincg (@(t)(cofiCostFunc(t, Y, R, num_users, num_movies, ...
                                 num_features, lambda)), ...
                 initial_parameters, options);
 
@@ -48,8 +40,7 @@ Theta = reshape(theta(num_movies*num_features+1:end), ...
 
 fprintf('Recommender system learning completed.\n');
 
-fprintf('\nProgram paused. Press enter to continue.\n');
-pause;
+fprintf('\nProgram finished. \n');
 
 %% ================== end ========================
 

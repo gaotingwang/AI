@@ -14,16 +14,23 @@ pause;
 %% =========== Part 2: K-Means区域 =============
 
 K = 3;
+initial_centroids = [3 3; 6 2; 8 5];
 max_iters = 10;
 
-% 划分簇
+% % 簇分配
+% idx = findClosestCentroids(X, initial_centroids);
 
-% 计算聚类中心
+% % 移动聚类中心
+% centroids = computeCentroids(X, idx, K);
 
+% Run K-Means algorithm. The 'true' at the end tells our function to plot
+% the progress of K-Means
+[centroids, idx] = runkMeans(X, initial_centroids, max_iters, true);
+fprintf('\nK-Means Done.\n\n');
 
+fprintf('Program paused. Press enter to continue.\n');
+pause;
 
 %% ================== end ========================
-
-
 
 
